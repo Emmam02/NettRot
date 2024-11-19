@@ -1,6 +1,8 @@
+require("dotenv").config();
+const connectionString = process.env.DB_CONNECTION_STRING;
+console.log(connectionString);
+
 const sql = require("msnodesqlv8");
-const connectionString =
-  "server=EMMASPC\\MSSQLSERVER01;Database=NettrotDB;Trusted_Connection=Yes;Driver={ODBC DRIVER 17 for SQL Server}";
 
 function fetchData(query) {
   return new Promise((resolve, reject) => {
