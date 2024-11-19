@@ -1,6 +1,5 @@
 require("dotenv").config();
 const connectionString = process.env.DB_CONNECTION_STRING;
-console.log(connectionString);
 
 const sql = require("msnodesqlv8");
 
