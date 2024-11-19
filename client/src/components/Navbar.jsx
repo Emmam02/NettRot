@@ -13,22 +13,22 @@ const Navbar = () => {
       </Link>
       <ul className="hidden sm:flex gap-5 text-md text-gray700">
         <NavLink to="/" className="flex flex-col items-center gap-1">
-          <p>Home</p>
+          <p>Hjem</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
 
-        <NavLink to="/products" className="flex flex-col items-center gap-1">
-          <p>Products</p>
+        <NavLink to="/product" className="flex flex-col items-center gap-1">
+          <p>Produkter</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
 
         <NavLink to="/about" className="flex flex-col items-center gap-1">
-          <p>About</p>
+          <p>Om oss</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
 
         <NavLink to="/contact" className="flex flex-col items-center gap-1">
-          <p>Contact</p>
+          <p>Kontakt</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
       </ul>
@@ -48,9 +48,15 @@ const Navbar = () => {
 
           <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500">
-              <p className="cursor-pointer hover:text-black"> My Profile</p>
-              <p className="cursor-pointer hover:text-black"> Orders</p>
-              <p className="cursor-pointer hover:text-black"> Login</p>
+              <Link to="/profile">
+                <p className="cursor-pointer hover:text-black"> Min Profil</p>
+              </Link>
+              <Link to="/orders">
+                <p className="cursor-pointer hover:text-black"> Ordre</p>
+              </Link>
+              <Link to="/login">
+                <p className="cursor-pointer hover:text-black"> Logg inn</p>
+              </Link>
             </div>
           </div>
         </div>

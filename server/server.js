@@ -20,7 +20,25 @@ const port = 4000;
 app.use(cors());
 app.get("/products", async (req, res) => {
   try {
-    const result = await db.fetchData();
+    const result = await db.fetchProducts();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch data" });
+  }
+});
+
+app.get("/users", async (req, res) => {
+  try {
+    const result = await db.fetchUsers();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch data" });
+  }
+});
+
+app.get("/purchases", async (req, res) => {
+  try {
+    const result = await db.fetchPurchases();
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch data" });
