@@ -58,7 +58,7 @@ const ProductList = () => {
               className="product-card p-4 border rounded-lg"
             >
               <img
-                src={`./public/assets${product.ImageURL}`}
+                src={`/assets${product.ImageURL}`}
                 alt={product.ProductName}
                 className="w-full h-48 object-cover mb-4"
               />
