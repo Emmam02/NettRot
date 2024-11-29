@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useLoggedIn } from "../context/LoggedInContext";
+import axios from "axios";
 import "../css/Navbar.css";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
+  const { isLoggedIn, logout } = useLoggedIn();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      logout();
+      navigate("/");
+    } catch (error) {
+      console.error("Feil ved logout:", error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-between py-5 font-sm">
       <Link to="/">
@@ -54,9 +68,18 @@ const Navbar = () => {
               <Link to="/orders">
                 <p className="cursor-pointer hover:text-black"> Ordre</p>
               </Link>
-              <Link to="/login">
-                <p className="cursor-pointer hover:text-black"> Logg inn</p>
-              </Link>
+              {isLoggedIn ? (
+                <p
+                  className="cursor-pointer hover:text-black"
+                  onClick={handleLogout}
+                >
+                  Logg ut
+                </p>
+              ) : (
+                <Link to="/login">
+                  <p className="cursor-pointer hover:text-black"> Logg inn</p>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -66,7 +89,7 @@ const Navbar = () => {
             className="w-5 min-w-5 cursor-pointer"
             alt="cart-icon"
           />
-          <p className="absolute right-[5px] bottom-[5-px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
+          <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[8px]">
             10
           </p>
         </Link>

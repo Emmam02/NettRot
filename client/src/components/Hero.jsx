@@ -22,7 +22,7 @@ const Hero = () => {
       </div>
       <div className="w-1/2 sm:w-1/2 ">
         <img
-          src="/public/assets/hero_img.png.webp"
+          src="/assets/hero_img.png.webp"
           alt="Hero"
           className="w-full h-full object-cover"
         />

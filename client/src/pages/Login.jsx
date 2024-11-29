@@ -1,10 +1,10 @@
 import React from "react";
-import CreateAccount from "../components/CreateAccount";
+import LoginAccount from "../components/LoginAccount";
 
 const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <CreateAccount />
+      <LoginAccount />
     </div>
   );
 };

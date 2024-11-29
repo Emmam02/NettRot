@@ -19,11 +19,11 @@ const CreateAccount = () => {
       return;
     }
 
-    const newUser = {
-      email,
-      username,
-      password,
-    };
+    // const newUser = {
+    //   email,
+    //   username,
+    //   password,
+    // };
 
     // console.log("Sender data:", newUser);
 
@@ -35,8 +35,7 @@ const CreateAccount = () => {
       });
       setMessage(response.data.message);
       setError(null);
-
-      navigate("/profile");
+      navigate("/login");
     } catch (error) {
       setMessage("");
       setError(error.response?.data?.error || "Noe gikk galt!");

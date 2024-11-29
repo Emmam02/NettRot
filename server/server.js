@@ -13,6 +13,10 @@ const connectionString = process.env.DB_CONNECTION_STRING;
 
 app.use(express.json());
 app.use(cors());
+
+{
+  /* PRODUKTER */
+}
 app.get("/products", async (req, res) => {
   try {
     const result = await db.fetchProducts();
@@ -22,6 +26,9 @@ app.get("/products", async (req, res) => {
   }
 });
 
+{
+  /* BRUKER */
+}
 app.get("/users", async (req, res) => {
   try {
     const result = await db.fetchUsers();
@@ -31,6 +38,9 @@ app.get("/users", async (req, res) => {
   }
 });
 
+{
+  /* ORDRE */
+}
 app.get("/purchases", async (req, res) => {
   try {
     const result = await db.fetchPurchases();
@@ -40,6 +50,9 @@ app.get("/purchases", async (req, res) => {
   }
 });
 
+{
+  /* REGISTRER BRUKER */
+}
 app.post(
   "/register",
   [
@@ -121,6 +134,115 @@ app.post(
     }
   }
 );
+
+{
+  /* LOGG INN */
+}
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "E-post og passord er påkrevd" });
+  }
+
+  try {
+    const query = "SELECT * FROM Users WHERE Email = ?";
+    sql.query(connectionString, query, [email], async (err, rows) => {
+      if (err) {
+        console.error("Feil ved innlogging:", err);
+        return res.status(500).json({ error: "Serverfeil" });
+      }
+
+      if (rows.length === 0) {
+        return res.status(400).json({ error: "Feil e-post eller passord" });
+      }
+
+      const user = rows[0];
+      const passwordMatch = await bcrypt.compare(password, user.PasswordHash);
+
+      if (!passwordMatch) {
+        return res.status(400).json({ error: "Feil e-post eller passord" });
+      }
+
+      res.json({ message: "Logget inn", UserID: user.UserID });
+    });
+  } catch (error) {
+    console.error("Uventet feil:", error);
+    res.status(500).json({ error: "Serverfeil" });
+  }
+});
+
+{
+  /* LOGG UT */
+}
+app.post("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ error: "Problemer med å logge ut" });
+    }
+    res.json({ message: "Bruker logget ut" });
+  });
+});
+
+{
+  /* ADRESSE */
+}
+app.get("/profile/address/:UserID", (req, res) => {
+  const UserID = req.params.UserID;
+  const query = "SELECT * FROM Addresses WHERE UserID = ?";
+
+  sql.query(connectionString, query, [UserID], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: "Feil ved henting av adresse" });
+    }
+    res.status(200).json(result);
+  });
+});
+
+{
+  /* LEGG TIL ADRESSE */
+}
+app.post("/profile/address", (req, res) => {
+  const { UserID, StreetAddress, City, ZipCode, Country } = req.body;
+
+  const query = `INSERT INTO Addresses(UserID, StreetAddress, City, ZipCode, Country)
+  VALUES (?, ?, ?, ?, ?)`;
+
+  sql.query(
+    connectionString,
+    query,
+    [UserID, StreetAddress, City, ZipCode, Country],
+    (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: "Feil ved lagring av adresse" });
+      }
+      res.status(200).json({ message: "Adressen er lagret" });
+    }
+  );
+});
+
+app.put("/profile/address", (req, res) => {
+  const { UserID, StreetAddress, City, ZipCode, Country } = req.body;
+
+  const query = `UPDATE Addresses
+                 SET StreetAddress = ?, City = ?, ZipCode = ?, Country = ?
+                 WHERE UserID = ?
+                `;
+
+  sql.query(
+    connectionString,
+    query,
+    [StreetAddress, City, ZipCode, Country, UserID],
+    (err, result) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ error: "Feil ved oppdatering av adresse" });
+      }
+      res.status(200).json({ message: "Adresse oppdatert" });
+    }
+  );
+});
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

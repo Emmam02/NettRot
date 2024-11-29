@@ -1,0 +1,9 @@
+CREATE TABLE Addresses(
+id INT PRIMARY KEY,
+UserID INT,
+StreetAdress VARCHAR(255),
+City VARCHAR(100),
+ZipCode VARCHAR(10),
+Country VARCHAR(100),
+FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
