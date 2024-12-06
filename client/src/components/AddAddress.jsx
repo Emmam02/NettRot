@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useLoggedIn } from "../context/LoggedInContext"; // Bruker context for å sjekke innlogging
+import { useLoggedIn } from "../context/LoggedInContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 const AddAddress = () => {
-  const { isLoggedIn } = useLoggedIn(); // Bruker contexten for å sjekke om bruker er logget inn
+  const { isLoggedIn } = useLoggedIn();
   const [address, setAddress] = useState({
     street_address: "",
     city: "",

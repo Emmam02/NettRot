@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { ProductContext } from "../context/ProductContext";
 import ProductFiltering from "./ProductFiltering";
 
@@ -57,13 +58,15 @@ const ProductList = () => {
               key={product.ProductID}
               className="product-card p-4 border rounded-lg"
             >
-              <img
-                src={`/assets${product.ImageURL}`}
-                alt={product.ProductName}
-                className="w-full h-48 object-cover mb-4"
-              />
-              <h3 className="font-semibold">{product.Name}</h3>
-              <p>{product.Price} $</p>
+              <Link to={`/product/${product.ProductID}`}>
+                <img
+                  src={`/assets${product.ImageURL}`}
+                  alt={product.ProductName}
+                  className="w-full h-48 object-cover mb-4"
+                />
+                <h3 className="font-semibold">{product.Name}</h3>
+                <p>{product.Price} $</p>
+              </Link>
             </div>
           ))}
         </div>

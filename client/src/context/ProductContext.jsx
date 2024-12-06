@@ -13,6 +13,7 @@ const ProductContextProvider = (props) => {
         const response = await fetch("http://localhost:4000/products");
         if (!response.ok) throw new Error("Failed to fetch products");
         const data = await response.json();
+        console.log("Products in ProductContext:", data);
         setProducts(data);
       } catch (err) {
         setError(err.message);

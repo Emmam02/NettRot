@@ -16,6 +16,7 @@ import PurchaseContextProvider from "./context/PurchaseContext";
 import CreateAccount from "./components/CreateAccount";
 import AddAddress from "./components/AddAddress";
 import { LoggedInProvider } from "./context/LoggedInContext";
+import SingleProduct from "./components/SingleProduct";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/about" elemt={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/product" element={<Product />} />
+                <Route path="/product/:ProductID" element={<SingleProduct />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/login" element={<Login />} />
